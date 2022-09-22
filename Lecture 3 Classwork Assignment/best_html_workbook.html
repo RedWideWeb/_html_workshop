@@ -3,13 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Best HTML Workbook</title>
+    <style>
+        .itemsList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .itemsList li {
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #dfdfdf;
+            background: #f5f5f5;
+        }
+        .selected {
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/uxyqk3Hwpmk?start=971&autoplay=1" title="YouTube video player" id="yt-video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uxyqk3Hwpmk?start=971&autoplay=0" title="YouTube video player" id="yt-video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <p>Are you lost?</p>
 <button data-id="geoButton" >Where am I?</button>
 <p id="geoLocation"></p>
+
+<ul id="itemsList" class="itemsList">
+    <li class="listItem" draggable="true">First</li>
+    <li class="listItem" draggable="true">Second</li>
+    <li class="listItem" draggable="true">Third</li>
+    <li class="listItem" draggable="true">Forth</li>
+    <li class="listItem" draggable="true">Fifth</li>
+</ul>
 
 <div class="contact-form">
     <form id="contact" action="https://www.w3schools.com/action_page.php" target="_blank">
@@ -74,6 +98,56 @@
             displayCoords('Geolocation IS NOT available in this browser')
         }
     })
+
+    const getNextElement = (cursorPosition, currentElement) => {
+        // Get elements box
+        const currentElementCoord = currentElement.getBoundingClientRect();
+        // Get center of the element
+        const currentElementCenter = currentElementCoord.y + currentElementCoord.height / 2;
+
+        // If cursor is higher than element's center - return current element
+        // otherwise - next DOM-element
+        return (cursorPosition < currentElementCenter) ? currentElement : currentElement.nextElementSibling;
+    };
+
+    const itemsList= document.querySelector(`#itemsList`);
+
+    itemsList.addEventListener(`dragstart`, (evt) => {
+        evt.target.classList.add(`selected`);
+    })
+
+    itemsList.addEventListener(`dragend`, (evt) => {
+        evt.target.classList.remove(`selected`);
+    });
+
+    itemsList.addEventListener(`dragover`, (evt) => {
+        evt.preventDefault();
+
+        const activeElement = itemsList.querySelector(`.selected`);
+        const currentElement = evt.target;
+        const isMoveable = activeElement !== currentElement &&
+            currentElement.classList.contains(`listItem`);
+
+        if (!isMoveable) {
+            return;
+        }
+
+        // evt.clientY — current cursor's y-axis,
+        const nextElement = getNextElement(evt.clientY, currentElement);
+
+        // Check if we need to swap
+        if (
+            nextElement &&
+            activeElement === nextElement.previousElementSibling ||
+            activeElement === nextElement
+        ) {
+            // If not return from function to reduce unnecessary calculations
+            return;
+        }
+
+        itemsList.insertBefore(activeElement, nextElement);
+    });
+
 </script>
 </body>
 </html>
