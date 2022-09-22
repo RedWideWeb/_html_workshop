@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Best HTML Workbook</title>
+</head>
+<body>
+<div class="contact-form">
+    <form id="contact" action="https://www.w3schools.com/action_page.php" target="_blank">
+        <h3>Contact us</h3>
+        <fieldset>
+            <input name="name" placeholder="Your name" type="text" tabindex="1" required>
+        </fieldset>
+        <fieldset>
+            <input name="email" placeholder="Your Email Address" type="email" tabindex="2" required>
+        </fieldset>
+        <fieldset>
+            <input name="phone" placeholder="Your Phone Number (optional)" type="tel" tabindex="3">
+        </fieldset>
+        <fieldset>
+            <p>How many GB of RAM do you have?</p>
+            <select name="ramAmount" tabindex="4" required>
+                <option value="2">2 GB</option>
+                <option value="4">4 GB</option>
+                <option value="8">8 GB</option>
+                <option value="16">16 GB</option>
+                <option value="32">32 GB</option>
+                <option value="64">64 GB</option>
+                <option value="128">128 GB</option>
+                <option value="too much">>128 GB</option>
+            </select>
+            <br>
+        </fieldset>
+        <fieldset>
+            <p>What type of RAM do you use?</p>
+            <input type="radio" name="ramType" value="DDR2" tabindex="5" required/> DDR2<br>
+            <input type="radio" name="ramType" value="DDR3" /> DDR3<br>
+            <input type="radio" name="ramType" value="DDR4" /> DDR4<br><br>
+        </fieldset>
+        <fieldset>
+            <textarea name="message" placeholder="Type your message here...." tabindex="6" required></textarea>
+        </fieldset>
+        <button type="submit" id="contact-submit" tabindex="7">Submit</button>
+    </form>
+</div>
+</body>
+</html>
