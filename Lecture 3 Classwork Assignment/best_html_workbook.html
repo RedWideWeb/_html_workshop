@@ -5,6 +5,7 @@
     <title>Best HTML Workbook</title>
 </head>
 <body>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uxyqk3Hwpmk?start=971&autoplay=1" title="YouTube video player" id="yt-video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 <div class="contact-form">
     <form id="contact" action="https://www.w3schools.com/action_page.php" target="_blank">
         <h3>Contact us</h3>
@@ -43,5 +44,17 @@
         <button type="submit" id="contact-submit" tabindex="7">Submit</button>
     </form>
 </div>
+<script>
+    // get video ID from YouTube link
+    let result = document.querySelector('#yt-video').src.match(/(?<=embed\/).+(?=\?)/)
+    if (result != null) {
+        // using YouTube API get title from video ID
+        fetch (`https://www.googleapis.com/youtube/v3/videos?id=${result[0]}&key=AIzaSyBDzEzQUybCrVAULPSqFktGnoBUrK--DSg&part=snippet`).then((response) => {
+            return response.json()
+        }).then((e) => {
+            document.head.querySelector('title').innerText = e.items[0].snippet.title
+        })
+    }
+</script>
 </body>
 </html>
