@@ -6,6 +6,11 @@
 </head>
 <body>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/uxyqk3Hwpmk?start=971&autoplay=1" title="YouTube video player" id="yt-video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>Are you lost?</p>
+<button data-id="geoButton" >Where am I?</button>
+<p id="geoLocation"></p>
+
 <div class="contact-form">
     <form id="contact" action="https://www.w3schools.com/action_page.php" target="_blank">
         <h3>Contact us</h3>
@@ -55,6 +60,20 @@
             document.head.querySelector('title').innerText = e.items[0].snippet.title
         })
     }
+
+    function displayCoords(message) {
+        document.querySelector('#geoLocation').textContent = message
+    }
+
+    document.querySelector('button[data-id=geoButton]').addEventListener('click', () => {
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                displayCoords(`Latitude: ${position.coords.latitude} Longitude: ${position.coords.longitude}`)
+            });
+        } else {
+            displayCoords('Geolocation IS NOT available in this browser')
+        }
+    })
 </script>
 </body>
 </html>
